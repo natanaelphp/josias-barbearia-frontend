@@ -3,24 +3,35 @@
     <div class="container">
 
       <div class="buttons">
-        <b-button type="is-success">
+        <b-button type="is-success" @click="create()">
           <i class="fas fa-plus"></i> Novo cliente
         </b-button>
       </div>
 
-      <b-table :data="data">
+      <b-modal
+        :active.sync="control.openModal"
+        has-modal-card
+        trap-focus
+        :destroy-on-hide="false"
+        aria-role="dialog"
+        aria-modal
+        @close="loadClients()"
+      >
+        <client-form :client="selectedClient"></client-form>
+      </b-modal>
+
+      <b-table :data="clients" :loading="control.loading" striped narrowed>
 
         <template slot-scope="props">
-          <b-table-column field="id" label="ID">{{ props.row.id }}</b-table-column>
           <b-table-column field="name" label="Nome">{{ props.row.name }}</b-table-column>
           <b-table-column field="phone" label="Telefone">{{ props.row.phone }}</b-table-column>
           <b-table-column field="email" label="Email">{{ props.row.email }}</b-table-column>
           <b-table-column field="actions" label="Ações" width="120">
             <div class="buttons">
-              <b-button type="is-warning" title="Alterar">
-                <i class="fas fa-pen"></i>
+              <b-button type="is-warning" title="Alterar" @click="edit(props.row)">
+                <i class="fas fa-pen has-text-white"></i>
               </b-button>
-              <b-button type="is-danger" title="Excluir">
+              <b-button type="is-danger" title="Excluir" @click="confirmDelete(props.row)">
                 <i class="fas fa-times"></i>
               </b-button>
             </div>
@@ -28,7 +39,7 @@
         </template>
 
         <template slot="empty">
-          <section class="section">
+          <section v-show="!control.loading" class="section">
             <div class="content has-text-grey has-text-centered">
               <p><i class="fas fa-frown fa-3x"></i></p>
               <p>Nenhum cliente cadastrado</p>
@@ -43,43 +54,61 @@
 </template>
 
 <script>
+import { http } from '@/plugins/http'
+import ClientForm from './ClientForm'
+
 export default {
   name: "Clients",
+  components: {
+    ClientForm
+  },
   data() {
     return {
-      data: [
-        {
-          id: 1,
-          name: "Jesse",
-          phone: "(16) 99999-1234",
-          email: "teste@etus.com.br"
-        },
-        {
-          id: 2,
-          name: "John",
-          phone: "(16) 99999-1234",
-          email: "teste@etus.com.br"
-        },
-        {
-          id: 3,
-          name: "Tina",
-          phone: "(16) 99999-1234",
-          email: "teste@etus.com.br"
-        },
-        {
-          id: 4,
-          name: "Clarence",
-          phone: "(16) 99999-1234",
-          email: "teste@etus.com.br"
-        },
-        {
-          id: 5,
-          name: "Anne",
-          phone: "(16) 99999-1234",
-          email: "teste@etus.com.br"
+      clients: [],
+      selectedClient: null,
+      control: {
+        loading: true,
+        openModal: false,
+      }
+    }
+  },
+  mounted () {
+    this.loadClients()
+  },
+  methods: {
+    loadClients () {
+      this.control.loading = true
+
+      http.get('clients')
+        .then(reponse => this.clients = reponse.data)
+        .finally(() => this.control.loading = false)
+    },
+    create () {
+      this.selectedClient = { name: '', phone: '', email: '' }
+      this.control.openModal = true
+    },
+    edit (client) {
+      this.selectedClient = client
+      this.control.openModal = true
+    },
+    confirmDelete (client) {
+      this.$buefy.dialog.confirm({
+        title: 'Excluir cliente',
+        message: 'Tem certeza de que deseja <b>excluir</b> este cliente? Esta ação não poderá ser desfeita.',
+        confirmText: 'Sim',
+        cancelText: 'Não',
+        type: 'is-danger',
+        onConfirm: () => {
+          http.delete('clients/' + client.id)
+            .then(() => {
+              const index = this.clients.indexOf(client)
+              this.clients.splice(index, 1)
+
+              this.$buefy.toast.open('Cliente excluído')
+            })
         }
-      ],
-    };
+      })
+    },
   }
-};
+}
 </script>

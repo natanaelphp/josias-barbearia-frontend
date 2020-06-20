@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 import { http } from '@/plugins/http'
 
 export const attemptLogin = ({ dispatch }, payload) => {
-  return http.post('/api/login', payload)
+  return http.post('login', payload)
     .then(response => {
       const { token, user } = response.data
 
@@ -15,7 +15,7 @@ export const attemptLogin = ({ dispatch }, payload) => {
 }
 
 export const logout = ({ dispatch }) => {
-  http.post('/api/logout')
+  http.post('logout')
 
   // call actions
   return Promise.all([
@@ -67,7 +67,7 @@ export const checkUserToken = ({ dispatch, state }) => {
  * Retrieves updated user information
  * If something goes wrong, the user's token is probably invalid
  */
-export const loadUser = ({ dispatch }) => http.get('/api/me')
+export const loadUser = ({ dispatch }) => http.get('me')
   // store user's data
   .then(user => dispatch('setUser', user.data))
   .catch(() => {

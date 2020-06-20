@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // allow use http client without Vue instance
 export const http = axios.create({
-  baseURL: 'http://localhost:8081/',
+  baseURL: 'http://localhost:8081/api/',
 })
 
 /**
