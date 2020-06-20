@@ -5,7 +5,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title has-text-centered is-size-2">
-            Josias Barbearia
+            Barbearia do Josias
           </h1>
           <div class="columns is-centered">
             <div class="column is-5-tablet is-4-desktop is-4-widescreen">
@@ -56,11 +56,18 @@
 
     <footer class="footer">
       <div class="content has-text-centered">
-        <!-- <div class="buttons">
-          <b-button>Josias</b-button>
-          <b-button>Profissional 1</b-button>
-          <b-button>Profissional 2</b-button>
-        </div> -->
+        <p>Para maior facilidade ao testar o sistema, clique no usuário que deseja logar.</p>
+        <div class="has-text-centered">
+          <b-button
+            v-for="user in users"
+            :title="user.type"
+            @click="fillForm(user)"
+            :key="user.name"
+            class="mr-2"
+          >
+            {{ user.name }}
+          </b-button>
+        </div>
       </div>
     </footer>
 
@@ -79,7 +86,12 @@ export default {
         password: ''
       },
       errorMsg: '',
-      loading: false
+      loading: false,
+      users: [
+        { name: 'Josias',	email: 'josias@josiasbarbearia.com.br', type: 'Administrador' },
+        { name: 'Carlos',	email: 'carlos@josiasbarbearia.com.br', type: 'Profissional' },
+        { name:  'Vitor',	email: 'vitor@josiasbarbearia.com.br', type: 'Profissional' }
+      ]
     }
   },
   methods: {
@@ -91,7 +103,11 @@ export default {
         .then(() => this.$router.push('/'))
         .catch(() => this.errorMsg = 'Usuário ou senha inválidos')
         .finally(() => this.loading = false)
-    }
+    },
+    fillForm (user) {
+      this.form.email = user.email
+      this.form.password = 'teste'
+    },
   }
 }
 </script>
