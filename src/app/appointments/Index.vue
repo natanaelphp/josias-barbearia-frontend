@@ -4,7 +4,7 @@
 
       <div class="buttons">
         <b-button type="is-success" @click="create()">
-          <i class="fas fa-plus"></i> Novo cliente
+          <i class="fas fa-plus"></i> Novo agendamento
         </b-button>
       </div>
 
@@ -15,17 +15,27 @@
         :destroy-on-hide="false"
         aria-role="dialog"
         aria-modal
-        @close="loadClients()"
+        @close="loadAppointments()"
       >
-        <client-form :client="selectedClient"></client-form>
+        <appointments-form :appointment="selectedAppointment"></appointments-form>
       </b-modal>
 
-      <b-table :data="clients" :loading="control.loading" striped narrowed>
+      <b-table :data="appointments" :loading="control.loading" striped narrowed>
 
         <template slot-scope="props">
-          <b-table-column field="name" label="Nome">{{ props.row.name }}</b-table-column>
-          <b-table-column field="phone" label="Telefone">{{ props.row.phone }}</b-table-column>
-          <b-table-column field="email" label="Email">{{ props.row.email }}</b-table-column>
+
+          <b-table-column field="client" label="Client">
+            {{ props.row.client.name }}
+          </b-table-column>
+
+          <b-table-column field="service" label="Serviço">
+            {{ props.row.service.name }}
+          </b-table-column>
+
+          <b-table-column field="datetime" label="Data e hora">
+            {{ formatDate(props.row.datetime) }}
+          </b-table-column>
+
           <b-table-column field="actions" label="Ações" width="120">
             <div class="buttons">
               <b-button type="is-warning" title="Alterar" @click="edit(props.row)">
@@ -36,13 +46,14 @@
               </b-button>
             </div>
           </b-table-column>
+
         </template>
 
         <template slot="empty">
           <section v-show="!control.loading" class="section">
             <div class="content has-text-grey has-text-centered">
               <p><i class="fas fa-frown fa-3x"></i></p>
-              <p>Nenhum cliente cadastrado</p>
+              <p>Nenhum agendamento cadastrado</p>
             </div>
           </section>
         </template>
@@ -54,18 +65,19 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { http } from '@/plugins/http'
-import ClientForm from './ClientForm'
+import AppointmentsForm from './AppointmentsForm'
 
 export default {
-  name: "Clients",
+  name: "Appointments",
   components: {
-    ClientForm
+    AppointmentsForm
   },
   data() {
     return {
-      clients: [],
-      selectedClient: null,
+      appointments: [],
+      selectedAppointment: null,
       control: {
         loading: true,
         openModal: false,
@@ -74,42 +86,50 @@ export default {
   },
   mounted () {
     if (this.$route.query.new) this.create()
-    this.loadClients()
+    this.loadAppointments()
   },
   methods: {
-    loadClients () {
+    loadAppointments () {
       this.control.loading = true
 
-      http.get('clients')
-        .then(reponse => this.clients = reponse.data)
+      http.get('appointments')
+        .then(reponse => this.appointments = reponse.data)
         .finally(() => this.control.loading = false)
     },
     create () {
-      this.selectedClient = { name: '', phone: '', email: '' }
+      this.selectedAppointment = {
+        client_id: null,
+        service_id: null,
+        datetime: moment().startOf('hour')
+      }
+
       this.control.openModal = true
     },
-    edit (client) {
-      this.selectedClient = client
+    edit (appointment) {
+      this.selectedAppointment = appointment
       this.control.openModal = true
     },
-    confirmDelete (client) {
+    confirmDelete (appointment) {
       this.$buefy.dialog.confirm({
-        title: 'Excluir cliente',
-        message: 'Tem certeza de que deseja <b>excluir</b> este cliente? Esta ação não poderá ser desfeita.',
+        title: 'Excluir agendamento',
+        message: 'Tem certeza de que deseja <b>excluir</b> este agendamento? Esta ação não poderá ser desfeita.',
         confirmText: 'Sim',
         cancelText: 'Não',
         type: 'is-danger',
         onConfirm: () => {
-          http.delete('clients/' + client.id)
+          http.delete('appointments/' + appointment.id)
             .then(() => {
-              const index = this.clients.indexOf(client)
-              this.clients.splice(index, 1)
+              const index = this.appointments.indexOf(appointment)
+              this.appointments.splice(index, 1)
 
-              this.$buefy.toast.open('Cliente excluído')
+              this.$buefy.toast.open('Agendamento excluído')
             })
         }
       })
     },
+    formatDate (value) {
+      return moment(value).format('DD/MM/YYYY HH:mm:ss')
+    }
   }
 }
 </script>

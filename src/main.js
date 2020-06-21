@@ -6,9 +6,9 @@ import store from './store'
 import { sync } from 'vuex-router-sync'
 
 import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
+import BuefyConfig from './BuefyConfig'
 
-Vue.use(Buefy)
+Vue.use(Buefy, BuefyConfig)
 
 sync(store, router)
 

@@ -20,7 +20,6 @@
                     v-model="form.email"
                     type="email"
                     placeholder="seuemail@etus.com.br"
-                    icon-pack="fas"
                     icon="envelope"
                     @keypress.enter.native="login()"
                   ></b-input>
@@ -31,7 +30,6 @@
                     v-model="form.password"
                     type="password"
                     placeholder="*******"
-                    icon-pack="fas"
                     icon="lock"
                     @keypress.enter.native="login()"
                   ></b-input>

@@ -13,7 +13,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'clients' }">
           <i class="fas fa-users mr-2"></i>Clientes
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ name: 'schedules' }">
+        <b-navbar-item tag="router-link" :to="{ name: 'appointments' }">
           <i class="far fa-calendar-alt mr-2"></i>Agendamentos
         </b-navbar-item>
       </template>

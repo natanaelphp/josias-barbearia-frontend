@@ -17,14 +17,9 @@ export default [
     name: 'clients',
     component: () => import(/* webpackChunkName: "clients" */ '../app/clients/Index.vue')
   },
-  // {
-  //   path: '/clients/create',
-  //   name: 'clients.create',
-  //   component: () => import(/* webpackChunkName: "clients" */ '../app/clients/Create.vue')
-  // },
   {
-    path: '/schedules',
-    name: 'schedules',
-    component: () => import(/* webpackChunkName: "schedules" */ '../app/schedules/Index.vue')
+    path: '/appointments',
+    name: 'appointments',
+    component: () => import(/* webpackChunkName: "appointments" */ '../app/appointments/Index.vue')
   },
 ]
