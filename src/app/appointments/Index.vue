@@ -64,7 +64,7 @@
 
         <template slot-scope="props">
 
-          <b-table-column field="client" label="Client">
+          <b-table-column field="client" label="Cliente">
             {{ props.row.client.name }}
           </b-table-column>
 
@@ -204,7 +204,7 @@ export default {
       this.loadAppointments()
     },
     formatDate (value) {
-      return moment(value).format('DD/MM/YYYY HH:mm:ss')
+      return moment(value).format('DD/MM/YYYY HH:mm')
     }
   }
 }
