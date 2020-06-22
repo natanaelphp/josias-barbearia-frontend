@@ -97,7 +97,7 @@
           <section v-show="!control.loading" class="section">
             <div class="content has-text-grey has-text-centered">
               <p><i class="fas fa-frown fa-3x"></i></p>
-              <p>Nenhum agendamento cadastrado</p>
+              <p>Nenhum agendamento</p>
             </div>
           </section>
         </template>

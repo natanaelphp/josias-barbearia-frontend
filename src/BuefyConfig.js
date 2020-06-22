@@ -24,4 +24,6 @@ Vue.component('vue-fontawesome', FontAwesomeIcon)
 export default {
     defaultIconComponent: 'vue-fontawesome',
     defaultIconPack: 'fas',
+    defaultMonthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    defaultDayNames: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
 }

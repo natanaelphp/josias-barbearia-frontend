@@ -42,7 +42,7 @@
           <section v-show="!control.loading" class="section">
             <div class="content has-text-grey has-text-centered">
               <p><i class="fas fa-frown fa-3x"></i></p>
-              <p>Nenhum cliente cadastrado</p>
+              <p>Nenhum cliente</p>
             </div>
           </section>
         </template>
