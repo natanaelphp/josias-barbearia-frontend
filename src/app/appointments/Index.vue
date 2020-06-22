@@ -22,10 +22,7 @@
                 @input="loadAppointments()"
               >
                 <option :value="null"></option>
-                <option
-                  v-for="user in users"
-                  :value="user.id"
-                  :key="user.id">
+                <option v-for="user in users" :value="user.id" :key="user.id">
                   {{ user.name }}
                 </option>
               </b-select>
