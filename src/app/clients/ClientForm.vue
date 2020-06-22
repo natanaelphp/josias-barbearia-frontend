@@ -33,7 +33,7 @@ import { http } from '@/plugins/http'
 import ValidationErrors from '@/components/ValidationErrors'
 
 export default {
-  name: "ClientForm",
+  name: 'ClientForm',
   components: {
     ValidationErrors
   },

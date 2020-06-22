@@ -86,9 +86,9 @@ export default {
       errorMsg: '',
       loading: false,
       users: [
-        { name: 'Josias',	email: 'josias@josiasbarbearia.com.br', type: 'Administrador' },
-        { name: 'Carlos',	email: 'carlos@josiasbarbearia.com.br', type: 'Profissional' },
-        { name:  'Vitor',	email: 'vitor@josiasbarbearia.com.br', type: 'Profissional' }
+        { name: 'Josias', email: 'josias@josiasbarbearia.com.br', type: 'Administrador' },
+        { name: 'Carlos', email: 'carlos@josiasbarbearia.com.br', type: 'Profissional' },
+        { name:  'Vitor', email: 'vitor@josiasbarbearia.com.br', type: 'Profissional' }
       ]
     }
   },

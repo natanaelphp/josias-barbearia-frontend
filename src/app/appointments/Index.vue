@@ -118,7 +118,7 @@ import { http } from '@/plugins/http'
 import AppointmentsForm from './AppointmentsForm'
 
 export default {
-  name: "Appointments",
+  name: 'Appointments',
   components: {
     AppointmentsForm
   },

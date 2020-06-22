@@ -58,7 +58,7 @@ import { http } from '@/plugins/http'
 import ClientForm from './ClientForm'
 
 export default {
-  name: "Clients",
+  name: 'Clients',
   components: {
     ClientForm
   },
