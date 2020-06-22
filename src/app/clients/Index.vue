@@ -4,7 +4,7 @@
 
       <div class="buttons">
         <b-button type="is-success" @click="create()">
-          <i class="fas fa-plus"></i> Novo cliente
+          <i class="fas fa-plus mr-2"></i>Novo cliente
         </b-button>
       </div>
 
