@@ -19,7 +19,7 @@
     "express": "^4.19.2",
     "localforage": "^1.7.4",
     "moment": "^2.29.4",
-    "vue": "^2.6.11",
+    "vue": "^3.0.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
     "vuex-router-sync": "^5.0.0"
